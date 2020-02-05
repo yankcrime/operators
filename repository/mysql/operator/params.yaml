@@ -5,11 +5,20 @@ parameters:
     default: "backup.sql"
     displayName: "BackupFile"
     trigger: backup
+  - name: BACKUP_DB
+    description: "Database to backup.  Defaults to all if undefined"
+    default: ""
+    displayName: "BackupDB"
+    trigger: backup
   - name: PASSWORD
     default: "password"
   - name: RESTORE_FILE
     default: "backup.sql"
     description: "Filename to restore the db from"
+    trigger: restore
+  - name: RESTORE_DB
+    default: ""
+    description: "Name of the database to restore to."
     trigger: restore
   - name: PORT
     default: 3306

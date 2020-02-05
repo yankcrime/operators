@@ -16,7 +16,11 @@ spec:
         command:
         - /bin/sh
         - -c
-        - "mysqldump -u root -h {{ .Name }}-svc -p{{ .Params.PASSWORD }} kudo > /backups/{{ .Params.BACKUP_FILE }}"
+        {{ if eq .Params.BACKUP_DB "" }}
+        - "mysqldump -u root -h {{ .Name }}-svc -p{{ .Params.PASSWORD }} --all-databases > /backups/{{ .Params.BACKUP_FILE }}"
+        {{ else }}
+        - "mysqldump -u root -h {{ .Name }}-svc -p{{ .Params.PASSWORD }} {{ .Params.BACKUP_DB }} > /backups/{{ .Params.BACKUP_FILE }}"
+        {{ end }}
         volumeMounts:
         - name: backup-pv
           mountPath: /backups
